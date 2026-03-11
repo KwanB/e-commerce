@@ -1,9 +1,12 @@
+import { COLORS } from "@/assets/constants";
 import { ProductCardProps } from "@/assets/constants/types";
+import { Ionicons } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import React from "react";
-import { Image, TouchableOpacity, View } from "react-native";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 
 export default function ProductCard({ product }: ProductCardProps) {
+  const isLiked = true;
   return (
     <Link href={`/product/${product._id}`} asChild>
       <TouchableOpacity className="w-[48%] mb-4 bg-white rounded-lg overflow-hidden">
@@ -13,6 +16,48 @@ export default function ProductCard({ product }: ProductCardProps) {
             className="w-full h-full"
             resizeMode="cover"
           />
+
+          {/* faviourte icon  */}
+          <TouchableOpacity
+            className="absolute top-2 right-2 z-10 p-2 bg-white rounded-full shadow-sm"
+            onPress={(e) => {
+              e.stopPropagation();
+            }}
+          >
+            <Ionicons
+              name={isLiked ? "heart" : "heart-outline"}
+              size={20}
+              color={isLiked ? COLORS.accent : COLORS.primary}
+            />
+          </TouchableOpacity>
+
+          {/* is Featured  */}
+          {product.isFeatured && (
+            <View className="absolute top-2 left-2 bg-black px-2 py-1 rounded">
+              <Text className="text-white text-xs font-bold uppercase">
+                Featured
+              </Text>
+            </View>
+          )}
+        </View>
+
+        {/* Product info  */}
+        <View className="p-3">
+          <View className="flex-row items-center mb-1">
+            <Ionicons name="star" size={14} color="#FFD700" />
+            <Text className="text-secondary text-xs ml-1">4.6</Text>
+          </View>
+          <Text
+            className="text-primary font-medium text-sm mb-1"
+            numberOfLines={1}
+          >
+            {product.name}
+          </Text>
+          <View className="flex-row items-center">
+            <Text className="text-primary text-base font-bold">
+              ${product.price.toFixed(2)}
+            </Text>
+          </View>
         </View>
       </TouchableOpacity>
     </Link>
