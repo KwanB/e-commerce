@@ -1,11 +1,11 @@
 import { dummyWishlist } from "@/assets/assets";
 import { Product, WishlistContextType } from "@/assets/constants/types";
 import {
-    createContext,
-    ReactNode,
-    useContext,
-    useEffect,
-    useState,
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
 } from "react";
 
 const WishlistContext = createContext<WishlistContextType | undefined>(
@@ -23,8 +23,8 @@ export function WishlistProvider({ children }: { children: ReactNode }) {
   };
 
   const toggleWishlist = async (product: Product) => {
-    const exists = wishlist.find((p) => p._id === product._id);
-    setWishlist((prev: any) => {
+    setWishlist((prev) => {
+      const exists = prev.some((p) => p._id === product._id);
       if (exists) {
         return prev.filter((p: any) => p._id !== product._id);
       }
